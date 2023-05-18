@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:moneytap/components/my_button.dart';
 import 'package:moneytap/components/my_textfield.dart';
-import 'package:moneytap/components/square_tile.dart';
+
 import 'package:moneytap/home_screen.dart';
 import 'package:moneytap/pages/register_page.dart';
 import 'package:http/http.dart' as http;
@@ -75,19 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: 'Password',
                     obscureText: true,
                   ),
-                  /* const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Forgot the Password?',
-                          style: TextStyle(color: Colors.yellow),
-                        ),
-                      ],
-                    ),
-                  ),*/
                   const SizedBox(height: 40),
                   MyButton(
                     text: 'sign in',
@@ -96,7 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                         final email = emailController.text;
                         final password = passwordController.text;
 
-                        final url = Uri.parse('http://10.0.2.2:8080/api/login');
+                        final url =
+                            Uri.parse('http://10.0.2.2:8080/api/user/login');
                         try {
                           final response = await http.post(
                             url,
@@ -165,66 +153,6 @@ class _LoginPageState extends State<LoginPage> {
                       }
                     },
                   ),
-
-                  /* MyButton(
-                    text: 'sign in',
-                    onTap: () async {
-                      if (formKey.currentState!.validate()) {
-                        final email = emailController.text;
-                        final password = passwordController.text;
-
-                        final url = Uri.parse('http://10.0.2.2:8080/api/login');
-                        final response = await http.post(
-                          url,
-                          body: {
-                            'email': email,
-                            'password': password,
-                          },
-                        );
-
-                        if (response.statusCode == 200) {
-                          final data = jsonDecode(response.body);
-                          final bool loggedIn = data['loggedIn'] ?? false;
-
-                          if (loggedIn) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('Login Failed'),
-                                content: Text('Invalid email or password.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('Failed to connect to the server.'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
-                    },
-                  ),*/
                   const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
