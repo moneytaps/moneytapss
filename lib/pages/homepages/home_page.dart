@@ -86,6 +86,7 @@ class _UserHomeState extends State<UserHome> {
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -94,14 +95,12 @@ class _UserHomeState extends State<UserHome> {
                             'As low as 0.06%/day',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 140,
-                        ),
+                        SizedBox(width: 80),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
@@ -109,7 +108,7 @@ class _UserHomeState extends State<UserHome> {
                             'Term 90days+',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
+                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

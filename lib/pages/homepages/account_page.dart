@@ -17,6 +17,7 @@ class _UserAccountState extends State<UserAccount> {
 
   @override
   Widget build(BuildContext context) {
+    var contactController;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -38,7 +39,7 @@ class _UserAccountState extends State<UserAccount> {
                     children: [
                       SizedBox(height: 10),
                       Text(
-                        'Contact number: ${contactNumberController.text}',
+                        'Contact number: ',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 18,

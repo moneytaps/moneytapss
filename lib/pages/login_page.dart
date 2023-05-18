@@ -1,209 +1,260 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:moneytap/components/my_button.dart';
 import 'package:moneytap/components/my_textfield.dart';
 import 'package:moneytap/components/square_tile.dart';
 import 'package:moneytap/home_screen.dart';
 import 'package:moneytap/pages/register_page.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  //Function()? onTap;
-  LoginPage({
-    super.key,
-    /*required this.onTap*/
-  });
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
-
-
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  //text editing controllers
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
 
-  //sign user in method
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 19, 104, 52),
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 50),
-
-                    //logo
-                    SizedBox(
-                      height: 120,
-                      width: 120,
-                      child: Image.asset('assets/images/Moneytap2.png',
-                          fit: BoxFit.fill),
+      backgroundColor: Color.fromARGB(255, 19, 104, 52),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 50),
+                  SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: Image.asset('assets/images/Moneytap2.png',
+                        fit: BoxFit.fill),
+                  ),
+                  SizedBox(height: 40),
+                  const Text(
+                    ' Welcome back!',
+                    style: TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
-
-                    SizedBox(height: 40),
-
-                    //welcome back, you've been missed!
-                    const Text(
-                      ' Welcome back!',
-                      style: TextStyle(
-                        color: Colors.yellow,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    const SizedBox(height: 40),
-
-                    //user textfield
-                    MyTextField(
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? "Please enter your email name"
-                            : null;
-                      },
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    //password textfield
-                    MyTextField(
-                      validator: (value) {
-                        return value!.isEmpty
-                            ? "Please enter your email name"
-                            : null;
-                      },
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
-
-                    const SizedBox(height: 10),
-
-                    //forgot password?
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            'Forgot the Password?',
-                            style: TextStyle(color: Colors.yellow),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 40),
-
-                    //sign in button
-                    MyButton(
-                      text: 'sign in',
-                      onTap: () async {
-                        if (formKey.currentState!.validate()) {}
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
-                      },
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    //or continue with
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              'Or continue with',
-                              style: TextStyle(color: Colors.yellow),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //google + apple sign in buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child:
-                              SquareTile(imagePath: 'assets/images/google.png'),
-                        ),
-                        //google button
-
-                        SizedBox(width: 25),
-
-                        //apple button
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child:
-                              SquareTile(imagePath: 'assets/images/apple.png'),
+                  ),
+                  const SizedBox(height: 40),
+                  MyTextField(
+                    validator: (value) {
+                      return value!.isEmpty
+                          ? "Please enter your email name"
+                          : null;
+                    },
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                  ),
+                  const SizedBox(height: 10),
+                  MyTextField(
+                    validator: (value) {
+                      return value!.isEmpty
+                          ? "Please enter your email name"
+                          : null;
+                    },
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+                  /* const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Forgot the Password?',
+                          style: TextStyle(color: Colors.yellow),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 50),
+                  ),*/
+                  const SizedBox(height: 40),
+                  MyButton(
+                    text: 'sign in',
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        final email = emailController.text;
+                        final password = passwordController.text;
 
-                    //not a member? register now
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Not a member?'),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: () async {
-                            Navigator.push(
+                        final url = Uri.parse('http://10.0.2.2:8080/api/login');
+                        try {
+                          final response = await http.post(
+                            url,
+                            body: {
+                              'email': email,
+                              'password': password,
+                            },
+                          );
+
+                          if (response.statusCode == 200) {
+                            final data = jsonDecode(response.body);
+                            final bool loggedIn = data['loggedIn'] ?? false;
+
+                            if (loggedIn) {
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegisterPage()));
+                                    builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Login Failed'),
+                                  content: Text('Invalid email or password.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Error'),
+                                content:
+                                    Text('Failed to connect to the server.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        } catch (error) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Error'),
+                              content: Text('An error occurred: $error'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),
+
+                  /* MyButton(
+                    text: 'sign in',
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        final email = emailController.text;
+                        final password = passwordController.text;
+
+                        final url = Uri.parse('http://10.0.2.2:8080/api/login');
+                        final response = await http.post(
+                          url,
+                          body: {
+                            'email': email,
+                            'password': password,
                           },
-                          // widget.onTap,
-                          child: const Text(
-                            'Register now',
-                            style: TextStyle(
-                                color: Colors.yellow,
-                                fontWeight: FontWeight.bold),
+                        );
+
+                        if (response.statusCode == 200) {
+                          final data = jsonDecode(response.body);
+                          final bool loggedIn = data['loggedIn'] ?? false;
+
+                          if (loggedIn) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Login Failed'),
+                                content: Text('Invalid email or password.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Failed to connect to the server.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      }
+                    },
+                  ),*/
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Not a member?'),
+                      const SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Register now',
+                          style: TextStyle(
+                            color: Colors.yellow,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

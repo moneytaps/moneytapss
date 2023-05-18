@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneytap/models/modeytap_client.dart';
 import 'package:moneytap/pages/homepages/barrowpages/confirm_user.dart';
 
 class UserBarrow extends StatefulWidget {
@@ -18,12 +19,12 @@ class _UserBarrowState extends State<UserBarrow> {
   var _primary;
   var _loanAmount;
   var _days;
-  var _porpose;
+  var _purpose;
   var _interest;
   var _totalAmount;
   final _totalAmountController = TextEditingController();
   final _interestController = TextEditingController();
-  final _porposeController = TextEditingController();
+  final _purposeController = TextEditingController();
   final _primaryController = TextEditingController();
   final _daysController = TextEditingController();
   final _loanAmountController = TextEditingController();
@@ -39,7 +40,7 @@ class _UserBarrowState extends State<UserBarrow> {
     super.initState();
     _totalAmountController.addListener(_updateText);
     _interestController.addListener(_updateText);
-    _porposeController.addListener(_updateText);
+    _purposeController.addListener(_updateText);
     _daysController.addListener(_updateText);
     _loanAmountController.addListener(_updateText);
     _primaryController.addListener(_updateText);
@@ -55,7 +56,7 @@ class _UserBarrowState extends State<UserBarrow> {
     setState(() {
       _totalAmount = _totalAmountController.text;
       _interest = _interestController.text;
-      _porpose = _porposeController.text;
+      _purpose = _purposeController.text;
       _days = _daysController.text;
       _loanAmount = _loanAmountController.text;
       _primary = _primaryController.text;
@@ -118,6 +119,9 @@ class _UserBarrowState extends State<UserBarrow> {
         child: ListView(
           children: [
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your first name" : null;
+              },
               controller: _firstController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -129,6 +133,9 @@ class _UserBarrowState extends State<UserBarrow> {
             Text("Your legal Firstname is ${_firstController.text}  "),
             SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your middle name" : null;
+              },
               controller: _middleController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -139,6 +146,9 @@ class _UserBarrowState extends State<UserBarrow> {
             Text("Your legal middlename is ${_middleController.text}  "),
             SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your surname" : null;
+              },
               controller: _surController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -149,6 +159,9 @@ class _UserBarrowState extends State<UserBarrow> {
             Text("Your legal Surname is ${_surController.text}  "),
             SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your Birthday" : null;
+              },
               controller: _birthController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -159,6 +172,9 @@ class _UserBarrowState extends State<UserBarrow> {
             Text("Your legal Birth date is ${_birthController.text}  "),
             SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your gender" : null;
+              },
               controller: _genderController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -169,6 +185,9 @@ class _UserBarrowState extends State<UserBarrow> {
             Text("Your Gender is ${_genderController.text}  "),
             SizedBox(height: 20),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your Address" : null;
+              },
               controller: _addressController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -195,6 +214,11 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty
+                    ? "Please enter your Primary source"
+                    : null;
+              },
               controller: _primaryController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -211,6 +235,9 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextFormField(
+              validator: (value) {
+                return value!.isEmpty ? "Please enter your loan amount" : null;
+              },
               controller: _loanAmountController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
@@ -243,7 +270,7 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextField(
-              controller: _porposeController,
+              controller: _purposeController,
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -281,7 +308,7 @@ class _UserBarrowState extends State<UserBarrow> {
                 address: _addressController.text,
                 loanAmount: _loanAmountController.text,
                 days: _daysController.text,
-                porpose: _porposeController.text,
+                purpose: _purposeController.text,
                 totalAmount: _totalAmountController.text,
                 interest: _interestController.text,
               );

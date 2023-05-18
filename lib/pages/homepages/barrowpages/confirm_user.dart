@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moneytap/home_screen.dart';
+import 'package:moneytap/models/modeytap_client.dart';
 
 import '../../../components/my_button.dart';
+import 'package:http/http.dart' as http;
 
 class ConfirmUser extends StatefulWidget {
   ConfirmUser(
@@ -14,7 +16,7 @@ class ConfirmUser extends StatefulWidget {
       required this.address,
       required this.primary,
       required this.loanAmount,
-      required this.porpose,
+      required this.purpose,
       required this.interest,
       required this.totalAmount,
       required this.days})
@@ -27,7 +29,7 @@ class ConfirmUser extends StatefulWidget {
       address,
       primary,
       loanAmount,
-      porpose,
+      purpose,
       interest,
       totalAmount,
       days;
@@ -36,25 +38,29 @@ class ConfirmUser extends StatefulWidget {
   State<ConfirmUser> createState() => _ConfirmUserState();
 }
 
+final formKey = GlobalKey<FormState>();
+
 bool? _chechBox = false;
 
 class _ConfirmUserState extends State<ConfirmUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 19, 104, 52),
-          title: Text('Review your Answers'),
-          centerTitle: true,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back),
-          ),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 19, 104, 52),
+        title: Text('Review your Answers'),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Form(
+          key: formKey,
           child: Container(
             child: ListView(
               children: [
@@ -359,7 +365,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      "Purpose:\n" " ${widget.porpose}",
+                      "Purpose:\n" " ${widget.purpose}",
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
@@ -442,6 +448,60 @@ class _ConfirmUserState extends State<ConfirmUser> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
+  }
+
+  void save() {
+    if (formKey.currentState!.validate()) {
+      // if the form is valid, create a new Student object
+
+      final newClient = ClientMoneytap(
+        firstName: widget.middleName,
+        middleName: widget.middleName,
+        surName: widget.surName,
+        birth: widget.birth,
+        gender: widget.gender,
+        primary: widget.address,
+        address: widget.primary,
+        loanAmount: double.parse(widget.loanAmount),
+        days: int.parse(widget.days),
+        purpose: widget.purpose,
+        totalAmount: double.parse(widget.totalAmount),
+        interest: double.parse(widget.interest),
+      );
+
+      // TODO: Call the API to save the student data to the database
+      final String url = 'http://10.0.2.2:8080/api/create_client';
+
+      http.post(Uri.parse(url), body: {
+        'first_name': newClient.firstName,
+        'middle_name': newClient.middleName,
+        'sur_name': newClient.surName,
+        'birth': newClient.birth,
+        'gender': newClient.gender,
+        'primary': newClient.primary,
+        'address': newClient.address,
+        'loan_amount': newClient.loanAmount,
+        'total_amount': newClient.totalAmount,
+        'purpose': newClient.purpose,
+      }).then((response) {
+        if (response.statusCode == 200) {
+          // student data save successfully
+          Navigator.pop(context);
+        } else {
+          // Error occured
+          throw Exception('Failed to save data');
+        }
+      }).catchError((error) {
+        // handle any errors
+        print(error);
+      });
+      // show a snackbar to indicate success
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('client data saved successfully!')),
+      );
+    }
   }
 }
