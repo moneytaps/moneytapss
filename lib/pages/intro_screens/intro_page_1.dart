@@ -21,23 +21,5 @@ class IntroPage1 extends StatelessWidget {
         ),
       ),
     );
-    // return Container(
-    //   height: 120,
-    //   width: 120,
-    //   decoration: const BoxDecoration(
-    //     image: DecorationImage(
-    //       fit: BoxFit.fitHeight,
-    //       image: AssetImage(
-    //         'assets/images/boardingscreen1.png ',
-    //       ),
-    //     ),
-    //   ),
-    //   //color: Colors.green,
-    //   //child: Center(child: Text("Yooooooooooo Page 2")),
-
-    //   /*body: SafeArea(
-    //       child: Image.asset('assets/images/boardingscreeen1', fit: BoxFit.fill),
-    //     ),*/
-    // );
   }
 }

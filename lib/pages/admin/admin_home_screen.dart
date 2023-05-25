@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../login_page.dart';
+
+
+
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
 
@@ -14,22 +18,49 @@ class _AdminHomeState extends State<AdminHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text('ADMIN DASHBOARD'),
-        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 19, 104, 52),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.logout),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirmation'),
+                    content: Text('Are you sure you want to log out?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
+                        child: Text('Yes'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('No'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.logout_outlined),
           ),
         ],
+        leading: IconButton(
+            onPressed: () {
+              setState(() {
+                isExpanded = !isExpanded;
+              });
+            },
+            icon: Icon(Icons.menu)),
       ),
       body: Row(
         children: [
@@ -68,23 +99,6 @@ class _AdminHomeState extends State<AdminHome> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isExpanded = !isExpanded;
-                            });
-                          },
-                          icon: Icon(Icons.menu)),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage('assets/images/logo.png'),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -341,6 +355,7 @@ class _AdminHomeState extends State<AdminHome> {
                   ),
                   SizedBox(height: 40.0),
                   Column(
+                    
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       DataTable(
@@ -362,14 +377,6 @@ class _AdminHomeState extends State<AdminHome> {
                               DataCell(Text('60 DAYS')),
                               DataCell(Text('720')),
                               DataCell(Text('20,720')),
-                            ]),
-                            DataRow(cells: [
-                              DataCell(Text('2')),
-                              DataCell(Text('zire lopez')),
-                              DataCell(Text("20,000")),
-                              DataCell(Text('60 DAYS')),
-                              DataCell(Text('240')),
-                              DataCell(Text('20,240')),
                             ]),
                           ])
                     ],

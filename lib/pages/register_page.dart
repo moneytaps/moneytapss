@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:moneytap/components/my_button.dart';
 import 'package:moneytap/components/my_textfield.dart';
-import 'package:moneytap/components/square_tile.dart';
-import 'package:moneytap/models/moneytap_user.dart';
 import 'package:moneytap/pages/login_page.dart';
 import 'package:moneytap/home_screen.dart';
 import 'package:http/http.dart' as http;
+
+import '../model/moneytap_user.dart';
 
 class RegisterPage extends StatefulWidget {
   //Function()? onTap;
@@ -122,65 +122,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     //sign in button
                     MyButton(
                       text: 'sign up',
-                      onTap: save,
+                      onTap: () {
+                        save();
+                      },
                     ),
 
                     const SizedBox(height: 20),
-
-                    //or continue with
-                    /*Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              'Or continue with',
-                              style: TextStyle(color: Colors.yellow[700]),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    //google + apple sign in buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child:
-                              SquareTile(imagePath: 'assets/images/google.png'),
-                        ),
-                        //google button
-
-                        SizedBox(width: 25),
-
-                        //apple button
-                        SizedBox(
-                          height: 80,
-                          width: 80,
-                          child:
-                              SquareTile(imagePath: 'assets/images/apple.png'),
-                        ),
-                      ],
-                    ),*/
 
                     const SizedBox(height: 50),
 
@@ -224,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
       final newUser = UserMoneytap(
         email: emailController.text,
         password: passwordController.text,
-        contact: confirmedController.text,
+        contact: contactController.text,
       );
 
       // TODO: Call the API to save the student data to the database

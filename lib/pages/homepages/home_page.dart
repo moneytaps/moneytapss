@@ -144,106 +144,112 @@ class _UserHomeState extends State<UserHome> {
                 ),
               ),
               SizedBox(height: .05),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      MySquare(
-                        image: 'assets/images/lv1.png',
-                      ),
-                      SizedBox(width: 8),
-                      MySquare(
-                        image: 'assets/images/lv2.png',
-                      ),
-                      SizedBox(width: 8),
-                      MySquare(
-                        image: 'assets/images/lv3.png',
-                      ),
-                      SizedBox(width: 8),
-                      MySquare(
-                        image: 'assets/images/lv4.png',
-                      ),
-                      SizedBox(width: 8),
-                      MySquare(
-                        image: 'assets/images/lv5.png',
-                      ),
-                      SizedBox(width: 8),
-                      MySquare(
-                        image: 'assets/images/lv6.png',
-                      ),
-                    ],
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        MySquare(
+                          image: 'assets/images/lv1.png',
+                        ),
+                        SizedBox(width: 8),
+                        MySquare(
+                          image: 'assets/images/lv2.png',
+                        ),
+                        SizedBox(width: 8),
+                        MySquare(
+                          image: 'assets/images/lv3.png',
+                        ),
+                        SizedBox(width: 8),
+                        MySquare(
+                          image: 'assets/images/lv4.png',
+                        ),
+                        SizedBox(width: 8),
+                        MySquare(
+                          image: 'assets/images/lv5.png',
+                        ),
+                        SizedBox(width: 8),
+                        MySquare(
+                          image: 'assets/images/lv6.png',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              Container(
-                height: 260,
-                width: 400,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.lightGreen,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Need Help?',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          'Get answers to your question and to learn more?',
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Container(
+                  height: 260,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.lightGreen,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Need Help?',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 22,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LearnMore()));
-                            },
-                            child: Container(
-                              height: 80,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Color.fromARGB(255, 19, 104, 52),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'View FAQ',
-                                  style: TextStyle(
-                                    color: Colors.yellow,
-                                    fontSize: 22,
+                        SizedBox(height: 5),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            'Get answers to your question and to learn more?',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LearnMore()));
+                              },
+                              child: Container(
+                                height: 80,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Color.fromARGB(255, 19, 104, 52),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'View FAQ',
+                                    style: TextStyle(
+                                      color: Colors.yellow,
+                                      fontSize: 22,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 60),
-                          SquareTile(imagePath: 'assets/images/QA.png')
-                        ],
-                      ),
-                    ],
+                            SizedBox(width: 60),
+                            SquareTile(imagePath: 'assets/images/QA.png')
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

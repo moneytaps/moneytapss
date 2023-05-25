@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneytap/models/modeytap_client.dart';
+import 'package:moneytap/model/modeytap_client.dart';
 import 'package:moneytap/pages/homepages/barrowpages/confirm_user.dart';
 
 class UserBarrow extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneytap/home_screen.dart';
-import 'package:moneytap/models/modeytap_client.dart';
+import 'package:moneytap/model/modeytap_client.dart';
 
 import '../../../components/my_button.dart';
 import 'package:http/http.dart' as http;
@@ -439,12 +439,17 @@ class _ConfirmUserState extends State<ConfirmUser> {
                   height: 60,
                 ),
                 MyButton(
-                  text: 'Confirm and submit',
+                  text: 'sign up',
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    clientsave();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ),
+                    );
                   },
-                ),
+                )
               ],
             ),
           ),
@@ -453,7 +458,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
     );
   }
 
-  void save() {
+  void clientsave() {
     if (formKey.currentState!.validate()) {
       // if the form is valid, create a new Student object
 
@@ -500,7 +505,21 @@ class _ConfirmUserState extends State<ConfirmUser> {
       });
       // show a snackbar to indicate success
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('client data saved successfully!')),
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.white,
+          content: Center(
+            heightFactor: 200.0,
+            widthFactor: 280.0,
+            child: Text(
+              'Client data saved successfully!',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
       );
     }
   }

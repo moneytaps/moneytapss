@@ -1,14 +1,16 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:moneytap/components/my_button.dart';
 import 'package:moneytap/components/my_textfield.dart';
 
 import 'package:moneytap/home_screen.dart';
+import 'package:moneytap/pages/admin/admin_home_screen.dart';
 import 'package:moneytap/pages/register_page.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -16,8 +18,74 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  String errorMessage = '';
+
+  Future<void> _login(BuildContext context) async {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    if (email == "Admin@" && password == "Admin123") {
+      // Navigate to admin dashboard
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => AdminHome()),
+          (route) => false);
+    } else {
+      try {
+        final response = await http.post(
+          Uri.parse('http://10.0.2.2:8080/api/user/login'),
+          body: jsonEncode({'email': email, 'password': password}),
+          headers: {'Content-Type': 'application/json'},
+        );
+
+        if (response.statusCode == 200) {
+          // Navigate to regular user home screen
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+              (route) => false);
+        } else {
+          final responseBody = jsonDecode(response.body);
+          setState(() {
+            errorMessage = responseBody['message'];
+          });
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Login Failed'),
+                content: Text(errorMessage),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('An error occurred. Please try again later.'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
 
   void dispose() {
     emailController.dispose();
@@ -77,81 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 40),
                   MyButton(
-                    text: 'sign in',
-                    onTap: () async {
-                      if (formKey.currentState!.validate()) {
-                        final email = emailController.text;
-                        final password = passwordController.text;
-
-                        final url =
-                            Uri.parse('http://10.0.2.2:8080/api/user/login');
-                        try {
-                          final response = await http.post(
-                            url,
-                            body: {
-                              'email': email,
-                              'password': password,
-                            },
-                          );
-
-                          if (response.statusCode == 200) {
-                            final data = jsonDecode(response.body);
-                            final bool loggedIn = data['loggedIn'] ?? false;
-
-                            if (loggedIn) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()),
-                              );
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  title: Text('Login Failed'),
-                                  content: Text('Invalid email or password.'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          } else {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('Error'),
-                                content:
-                                    Text('Failed to connect to the server.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                        } catch (error) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Error'),
-                              content: Text('An error occurred: $error'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: Text('OK'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                      }
-                    },
+                    text: 'Sign In',
+                    onTap: () => _login(context),
                   ),
                   const SizedBox(height: 50),
                   Row(

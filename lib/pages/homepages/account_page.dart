@@ -69,7 +69,7 @@ class _UserAccountState extends State<UserAccount> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'log out',
+                            'Log out',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 20,
@@ -78,10 +78,38 @@ class _UserAccountState extends State<UserAccount> {
                           ),
                           IconButton(
                             onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()));
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Confirmation'),
+                                    content: Text(
+                                        'Are you sure you want to log out?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage()),
+                                          );
+                                        },
+                                        child: Text('Yes'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: Text('No'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                             icon: Icon(Icons.logout_outlined),
                           ),
