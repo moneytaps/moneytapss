@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:matcher/matcher.dart';
-
 import 'package:flutter/material.dart';
 
 class UserHistory extends StatefulWidget {
@@ -12,6 +7,18 @@ class UserHistory extends StatefulWidget {
 
 class _UserHistoryPageState extends State<UserHistory> {
   int _currentIndex = 0;
+
+  List<Map<String, dynamic>> tableData = [
+    {'payment': 1, 'principal': 100, 'interest': 10, 'balance': 900},
+    {'payment': 2, 'principal': 150, 'interest': 15, 'balance': 750},
+    {'payment': 3, 'principal': 200, 'interest': 20, 'balance': 550},
+    {'payment': 4, 'principal': 500, 'interest': 50, 'balance': 670},
+    {'payment': 5, 'principal': 450, 'interest': 70, 'balance': 530},
+    {'payment': 6, 'principal': 600, 'interest': 80, 'balance': 470},
+    {'payment': 7, 'principal': 650, 'interest': 50, 'balance': 500},
+    {'payment': 8, 'principal': 700, 'interest': 60, 'balance': 600},
+    // Add more rows as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +43,14 @@ class _UserHistoryPageState extends State<UserHistory> {
                   child: Container(
                     height: 50,
                     color: _currentIndex == 0
-                        ? Color.fromARGB(255, 19, 104, 52)
-                        : Colors.yellow,
+                        ? Colors.yellow
+                        : Color.fromARGB(255, 19, 104, 52),
                     child: Center(
                       child: Text(
                         'Current',
                         style: TextStyle(
-                          color: Colors.white,
+                          color:
+                              _currentIndex == 0 ? Colors.black : Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -60,13 +68,14 @@ class _UserHistoryPageState extends State<UserHistory> {
                   child: Container(
                     height: 50,
                     color: _currentIndex == 1
-                        ? Color.fromARGB(255, 19, 104, 52)
-                        : Colors.yellow,
+                        ? Colors.yellow
+                        : Color.fromARGB(255, 19, 104, 52),
                     child: Center(
                       child: Text(
                         'History',
                         style: TextStyle(
-                          color: Colors.white,
+                          color:
+                              _currentIndex == 1 ? Colors.black : Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -92,9 +101,33 @@ class _UserHistoryPageState extends State<UserHistory> {
   }
 
   Widget _buildHistory() {
-    // TODO: Implement the history tab
-    return Center(
-      child: Text('History'),
+    return SingleChildScrollView(
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 300,
+              child: DataTable(
+                columns: [
+                  DataColumn(label: Text('Payment')),
+                  DataColumn(label: Text('Principal')),
+                  DataColumn(label: Text('Interest')),
+                  DataColumn(label: Text('Balance')),
+                ],
+                rows: tableData.map((data) {
+                  return DataRow(cells: [
+                    DataCell(Text(data['payment'].toString())),
+                    DataCell(Text(data['principal'].toString())),
+                    DataCell(Text(data['interest'].toString())),
+                    DataCell(Text(data['balance'].toString())),
+                  ]);
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

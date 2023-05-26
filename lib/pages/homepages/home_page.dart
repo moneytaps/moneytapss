@@ -1,18 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:matcher/matcher.dart';
 import 'package:moneytap/components/mysquare.dart';
 import 'package:moneytap/components/square_tile.dart';
 import 'package:moneytap/pages/homepages/barrowpages/personinfo_page.dart';
-
 import 'package:moneytap/pages/homepages/faq_page.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class UserHome extends StatefulWidget {
   const UserHome({Key? key}) : super(key: key);
+
   @override
   State<UserHome> createState() => _UserHomeState();
 }
@@ -40,8 +35,9 @@ class _UserHomeState extends State<UserHome> {
                 height: 300,
                 width: 400,
                 decoration: BoxDecoration(
-                    color: Colors.lightGreen,
-                    borderRadius: BorderRadius.circular(20)),
+                  color: Colors.lightGreen,
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Column(
                   children: [
                     Text(
@@ -57,16 +53,16 @@ class _UserHomeState extends State<UserHome> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        textAlign: TextAlign.start,
                         'Apply once and get continuous access to cash',
+                        textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white, fontSize: 22),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
+                        'Maximum Credit Amount',
                         textAlign: TextAlign.center,
-                        'Maxium Credit Amount',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -76,8 +72,8 @@ class _UserHomeState extends State<UserHome> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        textAlign: TextAlign.center,
                         '₱25,000',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 26,
@@ -91,8 +87,8 @@ class _UserHomeState extends State<UserHome> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            textAlign: TextAlign.center,
                             'As low as 0.06%/day',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -104,8 +100,8 @@ class _UserHomeState extends State<UserHome> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
+                            'Term 90 days+',
                             textAlign: TextAlign.center,
-                            'Term 90days+',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -120,9 +116,11 @@ class _UserHomeState extends State<UserHome> {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const UserBarrow()));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const UserBarrow(),
+                            ),
+                          );
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -134,8 +132,10 @@ class _UserHomeState extends State<UserHome> {
                           ),
                           child: Text(
                             'Get Loan',
-                            style:
-                                TextStyle(color: Colors.yellow, fontSize: 22),
+                            style: TextStyle(
+                              color: Colors.yellow,
+                              fontSize: 22,
+                            ),
                           ),
                         ),
                       ),
@@ -143,113 +143,100 @@ class _UserHomeState extends State<UserHome> {
                   ],
                 ),
               ),
-              SizedBox(height: .05),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        MySquare(
-                          image: 'assets/images/lv1.png',
-                        ),
-                        SizedBox(width: 8),
-                        MySquare(
-                          image: 'assets/images/lv2.png',
-                        ),
-                        SizedBox(width: 8),
-                        MySquare(
-                          image: 'assets/images/lv3.png',
-                        ),
-                        SizedBox(width: 8),
-                        MySquare(
-                          image: 'assets/images/lv4.png',
-                        ),
-                        SizedBox(width: 8),
-                        MySquare(
-                          image: 'assets/images/lv5.png',
-                        ),
-                        SizedBox(width: 8),
-                        MySquare(
-                          image: 'assets/images/lv6.png',
-                        ),
-                      ],
-                    ),
-                  ),
+              SizedBox(height: 0.5),
+              CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 350 / 400,
+                  viewportFraction: 0.8,
+                  enlargeCenterPage: true,
                 ),
+                items: [
+                  MySquare(
+                    image: 'assets/images/Image1.png',
+                  ),
+                  MySquare(
+                    image: 'assets/images/Image2.png',
+                  ),
+                  MySquare(
+                    image: 'assets/images/Image3.png',
+                  ),
+                  MySquare(
+                    image: 'assets/images/Image4.png',
+                  ),
+                  MySquare(
+                    image: 'assets/images/Image5.png',
+                  ),
+                ],
               ),
               SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Container(
-                  height: 260,
-                  width: 400,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.lightGreen,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Need Help?',
+              Container(
+                height: 260,
+                width: 400,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.lightGreen,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Need Help?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          'Get answers to your questions and learn more',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            'Get answers to your question and to learn more?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 50),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LearnMore()));
-                              },
-                              child: Container(
-                                height: 80,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Color.fromARGB(255, 19, 104, 52),
+                      ),
+                      SizedBox(height: 50),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LearnMore(),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    'View FAQ',
-                                    style: TextStyle(
-                                      color: Colors.yellow,
-                                      fontSize: 22,
-                                    ),
+                              );
+                            },
+                            child: Container(
+                              height: 80,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: Color.fromARGB(255, 19, 104, 52),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'View FAQ',
+                                  style: TextStyle(
+                                    color: Colors.yellow,
+                                    fontSize: 22,
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 60),
-                            SquareTile(imagePath: 'assets/images/QA.png')
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                          SizedBox(width: 60),
+                          SquareTile(imagePath: 'assets/images/QA.png'),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -259,4 +246,10 @@ class _UserHomeState extends State<UserHome> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: UserHome(),
+  ));
 }
