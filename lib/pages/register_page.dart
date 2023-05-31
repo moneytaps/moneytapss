@@ -24,6 +24,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmedController = TextEditingController();
   final contactController = TextEditingController();
+  final _firstController = TextEditingController();
+  final _middleController = TextEditingController();
+  final _surController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   //sign user in method
@@ -72,15 +76,51 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Contact Number',
                       obscureText: false,
                     ),
+                    const SizedBox(height: 10),
+                    MyTextField(
+                      validator: (value) {
+                        return value!.isEmpty
+                            ? "Please enter your contact name"
+                            : null;
+                      },
+                      controller: _firstController,
+                      hintText: 'First Name',
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 10),
+                    MyTextField(
+                      validator: (value) {
+                        return value!.isEmpty
+                            ? "Please enter your contact name"
+                            : null;
+                      },
+                      controller: _middleController,
+                      hintText: 'Middle Name',
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 10),
+                    MyTextField(
+                      validator: (value) {
+                        return value!.isEmpty
+                            ? "Please enter your contact name"
+                            : null;
+                      },
+                      controller: _surController,
+                      hintText: 'Last Name',
+                      obscureText: false,
+                    ),
 
                     const SizedBox(height: 10),
 
                     //user textfield
                     MyTextField(
                       validator: (value) {
-                        return value!.isEmpty
-                            ? "Please enter your email name"
-                            : null;
+                        if (value!.isEmpty) {
+                          return "Please enter your email";
+                        } else if (!value.endsWith("@gmail.com")) {
+                          return "Invalid email format. Email should end with @gmail.com";
+                        }
+                        return null;
                       },
                       controller: emailController,
                       hintText: 'Email',
@@ -169,6 +209,10 @@ class _RegisterPageState extends State<RegisterPage> {
     if (formKey.currentState!.validate()) {
       // if the form is valid, create a new Student object
       final newUser = UserMoneytap(
+        firstName: _firstController.text,
+        middleName:_middleController.text,
+        surName: _surController.text,
+
         email: emailController.text,
         password: passwordController.text,
         contact: contactController.text,
@@ -181,6 +225,9 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': newUser.email,
         'password': newUser.password,
         'contact': newUser.contact,
+        'first_name': newUser.firstName,
+        'middle_name': newUser.middleName,
+        'last_name': newUser.surName,
       }).then((response) {
         if (response.statusCode == 200) {
           // student data save successfully
