@@ -19,9 +19,11 @@ class ConfirmUser extends StatefulWidget {
       required this.purpose,
       required this.interest,
       required this.totalAmount,
+        required this.contact,
       required this.days})
       : super(key: key);
   String firstName,
+  contact,
       middleName,
       surName,
       birth,
@@ -77,12 +79,39 @@ class _ConfirmUserState extends State<ConfirmUser> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        "Contact number:  ",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Text(
+                        "${widget.contact}",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         "First name:  ",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "${widget.middleName}",
+                        "${widget.firstName}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],

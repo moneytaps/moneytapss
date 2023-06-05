@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../login_page.dart';
-import 'findClient/find&clients.dart';
+import 'package:http/http.dart' as http;
+
+import 'api_service.dart';
+
 
 
 class AdminHome extends StatefulWidget {
@@ -12,6 +17,16 @@ class AdminHome extends StatefulWidget {
 
 class _AdminHomeState extends State<AdminHome> {
   bool isExpanded = false;
+  FetchClient2 fetchClient = FetchClient2();
+  List<DataRow> fetchData = [];
+
+  void data()async{
+    http.Response response = await fetchClient.getClientList();
+    for(var i in jsonDecode(response.body)){
+
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,18 +99,6 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
 
 
-                NavigationRailDestination(
-                  icon: GestureDetector(
-                      onTap: () {
-                        // Navigate to the desired scaffold or screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => FindClient()),
-                        );
-                      },
-                      child: Icon(Icons.search)),
-                  label: Text('search'),
-                ),
               ],
               selectedIndex: 0),
           Expanded(
@@ -246,11 +249,14 @@ class _AdminHomeState extends State<AdminHome> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+
                           DataTable(
                               headingRowColor: MaterialStateProperty.resolveWith(
                                       (states) => Colors.green),
                               columns: [
                                 DataColumn(label: Text('ID')),
+                                DataColumn(label: Text('STATUS')),
+                                DataColumn(label: Text('CONTACT')),
                                 DataColumn(label: Text('NAME')),
                                 DataColumn(label: Text('LOAN AMOUNT')),
                                 DataColumn(label: Text('LOAN DAYS')),
@@ -261,6 +267,8 @@ class _AdminHomeState extends State<AdminHome> {
                               rows: [
                                 DataRow(cells: [
                                   DataCell(Text('1')),
+                                  DataCell(Text("PENDING")),
+                                  DataCell(Text("0932423423")),
                                   DataCell(Text('jeriz aguilar')),
                                   DataCell(Text("20,000")),
                                   DataCell(Text('60 DAYS')),
@@ -286,11 +294,6 @@ class _AdminHomeState extends State<AdminHome> {
                 ),
               ))
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: Colors.deepOrange,
       ),
     );
   }

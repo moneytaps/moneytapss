@@ -22,6 +22,8 @@ class _UserBarrowState extends State<UserBarrow> {
   var _purpose;
   var _interest;
   var _totalAmount;
+  var _contact;
+  final _contactController = TextEditingController();
   final _totalAmountController = TextEditingController();
   final _interestController = TextEditingController();
   final _purposeController = TextEditingController();
@@ -38,6 +40,7 @@ class _UserBarrowState extends State<UserBarrow> {
   @override
   void initState() {
     super.initState();
+    _contactController.addListener(_updateText);
     _totalAmountController.addListener(_updateText);
     _interestController.addListener(_updateText);
     _purposeController.addListener(_updateText);
@@ -54,6 +57,7 @@ class _UserBarrowState extends State<UserBarrow> {
 
   void _updateText() {
     setState(() {
+      _contact =_contactController.text;
       _totalAmount = _totalAmountController.text;
       _interest = _interestController.text;
       _purpose = _purposeController.text;
@@ -117,10 +121,23 @@ class _UserBarrowState extends State<UserBarrow> {
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: ListView(
-          children: [
+          children: [TextFormField(
+            validator: (value) {
+              return value!.isEmpty ? "Please enter your phone number " : null;
+            },
+            controller: _contactController,
+            style: TextStyle(fontSize: 18),
+            decoration: InputDecoration(
+              labelText: 'Phone number',
+              border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green)),
+            ),
+          ),
+            Text("Your legal Firstname is ${_contactController.text}  "),
+            SizedBox(height: 20),
             TextFormField(
               validator: (value) {
-                return value!.isEmpty ? "Please enter your first name" : null;
+                return value!.isEmpty ? "Please enter your Phone number" : null;
               },
               controller: _firstController,
               style: TextStyle(fontSize: 18),
@@ -299,6 +316,7 @@ class _UserBarrowState extends State<UserBarrow> {
           MaterialPageRoute(
             builder: (context) {
               return ConfirmUser(
+                contact: _contactController.text,
                 firstName: _firstController.text,
                 middleName: _middleController.text,
                 surName: _surController.text,

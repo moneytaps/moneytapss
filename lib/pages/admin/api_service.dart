@@ -1,26 +1,28 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:moneytap/model/usermodel.dart';
+import 'package:moneytap/model/model.dart';
 
-class FetchUser {
+class FetchClient2 {
   var data = [];
-  List<Userlist> results = [];
-  String fetchurl = "http://127.0.0.1:8080/api/user";
-
-  Future<List<Userlist>> getUserList() async {
+  List<Clientlist> results = [];
+  String fetchurl = "http://127.0.0.1:8080/loan_status";
+  Future<http.Response> getClientList() async {
     var url = Uri.parse(fetchurl);
-    var response = await http.get(url);
+    http.Response response = await http.get(url);
     try {
       if (response.statusCode == 200) {
-        data = json.decode(response.body);
-        results = data.map((e) => Userlist.fromJson(e)).toList();
+        data = jsonDecode(response.body);
+        results = data.map((e) => Clientlist.fromJson(e)).toList();
+        return response;
       } else {
         print('api error');
+        throw 'error';
       }
     } on Exception catch (e) {
       print('error: $e');
+      throw e.toString();
     }
-    return results;
+
   }
 }
