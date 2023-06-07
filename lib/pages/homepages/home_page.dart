@@ -96,7 +96,7 @@ class _UserHomeState extends State<UserHome> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 80),
+                        SizedBox(width: 30),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(

@@ -24,9 +24,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmedController = TextEditingController();
   final contactController = TextEditingController();
-  final _firstController = TextEditingController();
-  final _middleController = TextEditingController();
-  final _surController = TextEditingController();
+  final firstnameController = TextEditingController();
+  final middlenameController = TextEditingController();
+  final surnameController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -83,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ? "Please enter your contact name"
                             : null;
                       },
-                      controller: _firstController,
+                      controller: firstnameController,
                       hintText: 'First Name',
                       obscureText: false,
                     ),
@@ -94,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ? "Please enter your contact name"
                             : null;
                       },
-                      controller: _middleController,
+                      controller: middlenameController,
                       hintText: 'Middle Name',
                       obscureText: false,
                     ),
@@ -105,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ? "Please enter your contact name"
                             : null;
                       },
-                      controller: _surController,
+                      controller: surnameController,
                       hintText: 'Last Name',
                       obscureText: false,
                     ),
@@ -209,10 +209,9 @@ class _RegisterPageState extends State<RegisterPage> {
     if (formKey.currentState!.validate()) {
       // if the form is valid, create a new Student object
       final newUser = UserMoneytap(
-        firstName: _firstController.text,
-        middleName:_middleController.text,
-        surName: _surController.text,
-
+        firstname: firstnameController.text,
+        middlename:middlenameController.text,
+        surname: surnameController.text,
         email: emailController.text,
         password: passwordController.text,
         contact: contactController.text,
@@ -225,9 +224,9 @@ class _RegisterPageState extends State<RegisterPage> {
         'email': newUser.email,
         'password': newUser.password,
         'contact': newUser.contact,
-        'first_name': newUser.firstName,
-        'middle_name': newUser.middleName,
-        'last_name': newUser.surName,
+        'firstname': newUser.firstname,
+        'middlename': newUser.middlename,
+        'surname': newUser.surname,
       }).then((response) {
         if (response.statusCode == 200) {
           // student data save successfully

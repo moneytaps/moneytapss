@@ -1,50 +1,52 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:moneytap/home_screen.dart';
 import 'package:moneytap/model/modeytap_client.dart';
 
 import '../../../components/my_button.dart';
 import 'package:http/http.dart' as http;
-
 class ConfirmUser extends StatefulWidget {
   ConfirmUser(
       {Key? key,
-      required this.firstName,
-      required this.middleName,
-      required this.surName,
+      required this.first_name,
+      required this.middle_name,
+      required this.sur_name,
       required this.birth,
       required this.gender,
       required this.address,
       required this.primary,
-      required this.loanAmount,
+      required this.loan_amount,
       required this.purpose,
       required this.interest,
-      required this.totalAmount,
+      required this.total_amount,
         required this.contact,
       required this.days})
       : super(key: key);
-  String firstName,
-  contact,
-      middleName,
-      surName,
+  String first_name,
+      contact,
+      middle_name,
+      sur_name,
       birth,
       gender,
       address,
       primary,
-      loanAmount,
+      loan_amount,
       purpose,
       interest,
-      totalAmount,
+      total_amount,
       days;
 
   @override
   State<ConfirmUser> createState() => _ConfirmUserState();
 }
 
-final formKey = GlobalKey<FormState>();
+
 
 bool? _chechBox = false;
 
 class _ConfirmUserState extends State<ConfirmUser> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +113,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "${widget.firstName}",
+                        "${widget.first_name}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
@@ -138,7 +140,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "${widget.middleName}",
+                        "${widget.middle_name}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
@@ -163,7 +165,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "${widget.surName}",
+                        "${widget.sur_name}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
@@ -296,7 +298,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "₱ ${widget.loanAmount}",
+                        "₱ ${widget.loan_amount}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
@@ -375,7 +377,7 @@ class _ConfirmUserState extends State<ConfirmUser> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                        "₱${widget.totalAmount}",
+                        "₱${widget.total_amount}",
                         style: TextStyle(fontSize: 20),
                       ),
                     ],
@@ -468,9 +470,9 @@ class _ConfirmUserState extends State<ConfirmUser> {
                   height: 60,
                 ),
                 MyButton(
-                  text: 'sign up',
+                  text: 'confirm',
                   onTap: () {
-                    clientsave();
+                    clientsave(formKey);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -487,39 +489,66 @@ class _ConfirmUserState extends State<ConfirmUser> {
     );
   }
 
-  void clientsave() {
+  void clientsave(formKey) async {
     if (formKey.currentState!.validate()) {
       // if the form is valid, create a new Student object
 
-      final newClient = ClientMoneytap(
-        firstName: widget.middleName,
-        middleName: widget.middleName,
-        surName: widget.surName,
+      /*final newClient = ClientMoneytap(
+        contact: widget.contact,
+        first_name: widget.first_name,
+        middle_name: widget.middle_name,
+        sur_name: widget.sur_name,
         birth: widget.birth,
         gender: widget.gender,
         primary: widget.address,
         address: widget.primary,
-        loanAmount: double.parse(widget.loanAmount),
+        loan_amount: double.parse(widget.loan_amount.toString()),
         days: int.parse(widget.days),
         purpose: widget.purpose,
-        totalAmount: double.parse(widget.totalAmount),
-        interest: double.parse(widget.interest),
-      );
+        total_amount: double.parse(widget.total_amount.toString()),
+        interest: double.parse(widget.interest.toString()),
+      );*/
 
       // TODO: Call the API to save the student data to the database
-      final String url = 'http://10.0.2.2:8080/api/create_client';
+      const String url = 'http://10.0.2.2:8080/api/create_loan';
 
-      http.post(Uri.parse(url), body: {
-        'first_name': newClient.firstName,
-        'middle_name': newClient.middleName,
-        'sur_name': newClient.surName,
-        'birth': newClient.birth,
-        'gender': newClient.gender,
-        'primary': newClient.primary,
-        'address': newClient.address,
-        'loan_amount': newClient.loanAmount,
-        'total_amount': newClient.totalAmount,
-        'purpose': newClient.purpose,
+      http.Response response = await http.post(Uri.parse(url),
+
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+        'contact':  widget.contact,
+        'first_name': widget.first_name  ,
+        'middle_name':widget.middle_name,
+        'sur_name': widget.sur_name,
+        'birth': widget.birth,
+        'gender': widget.gender,
+        'primary':widget.primary,
+        'address': widget.address,
+        'days': widget.days,
+        'loan_amount': double.parse(widget.loan_amount),
+        'total_amount': double.parse(widget.total_amount),
+        'purpose': widget.purpose,
+        'interest': double.parse(widget.interest),
+      }));
+      print(response.statusCode);
+      print(response.body);
+
+      /*http.post(Uri.parse(url), body: <String, dynamic>{
+        'contact':  widget.contact,
+        'first_name': widget.first_name,
+        'middle_name':widget.middle_name,
+        'sur_name': widget.sur_name,
+        'birth': widget.birth,
+        'gender':  widget.gender,
+        'primary': widget.primary,
+        'address': widget.address,
+        'days': int.parse(widget.days.toString()),
+        'loan_amount': double.parse(widget.loan_amount.toString()),
+        'total_amount': double.parse(widget.total_amount.toString()),
+        'purpose': widget.purpose,
+        'interest': double.parse(widget.interest.toString()),
       }).then((response) {
         if (response.statusCode == 200) {
           // student data save successfully
@@ -529,17 +558,18 @@ class _ConfirmUserState extends State<ConfirmUser> {
           throw Exception('Failed to save data');
         }
       }).catchError((error) {
+        print('hey');
         // handle any errors
         print(error);
-      });
+      });*/
       // show a snackbar to indicate success
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           behavior: SnackBarBehavior.floating,
           backgroundColor: Colors.white,
           content: Center(
-            heightFactor: 200.0,
-            widthFactor: 280.0,
+            heightFactor:20.0,
+            widthFactor: 15.0,
             child: Text(
               'Client data saved successfully!',
               style: TextStyle(

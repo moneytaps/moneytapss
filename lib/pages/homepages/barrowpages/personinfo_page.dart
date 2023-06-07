@@ -10,82 +10,82 @@ class UserBarrow extends StatefulWidget {
 }
 
 class _UserBarrowState extends State<UserBarrow> {
-  var _firstName;
-  var _middleName;
-  var _surName;
-  var _birth;
-  var _gender;
-  var _address;
-  var _primary;
-  var _loanAmount;
-  var _days;
-  var _purpose;
-  var _interest;
-  var _totalAmount;
-  var _contact;
-  final _contactController = TextEditingController();
-  final _totalAmountController = TextEditingController();
-  final _interestController = TextEditingController();
-  final _purposeController = TextEditingController();
-  final _primaryController = TextEditingController();
-  final _daysController = TextEditingController();
-  final _loanAmountController = TextEditingController();
-  final _firstController = TextEditingController();
-  final _middleController = TextEditingController();
-  final _surController = TextEditingController();
-  final _birthController = TextEditingController();
-  final _genderController = TextEditingController();
-  final _addressController = TextEditingController();
+  var first_name;
+  var middle_name;
+  var sur_name;
+  var birth;
+  var gender;
+  var address;
+  var primary;
+  var loan_amount;
+  var days;
+  var purpose;
+  var interest;
+  var total_amount;
+  var contact;
+  final contactController = TextEditingController();
+  final total_amountController = TextEditingController();
+  final interestController = TextEditingController();
+  final purposeController = TextEditingController();
+  final primaryController = TextEditingController();
+  final daysController = TextEditingController();
+  final loan_amountController = TextEditingController();
+  final first_nameController = TextEditingController();
+  final middle_nameController = TextEditingController();
+  final sur_nameController = TextEditingController();
+  final birthController = TextEditingController();
+  final genderController = TextEditingController();
+  final addressController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _contactController.addListener(_updateText);
-    _totalAmountController.addListener(_updateText);
-    _interestController.addListener(_updateText);
-    _purposeController.addListener(_updateText);
-    _daysController.addListener(_updateText);
-    _loanAmountController.addListener(_updateText);
-    _primaryController.addListener(_updateText);
-    _firstController.addListener(_updateText);
-    _middleController.addListener(_updateText);
-    _surController.addListener(_updateText);
-    _birthController.addListener(_updateText);
-    _genderController.addListener(_updateText);
-    _addressController.addListener(_updateText);
+    contactController.addListener(_updateText);
+    total_amountController.addListener(_updateText);
+    interestController.addListener(_updateText);
+    purposeController.addListener(_updateText);
+    daysController.addListener(_updateText);
+    loan_amountController.addListener(_updateText);
+    primaryController.addListener(_updateText);
+    first_nameController.addListener(_updateText);
+    middle_nameController.addListener(_updateText);
+    sur_nameController.addListener(_updateText);
+    birthController.addListener(_updateText);
+    genderController.addListener(_updateText);
+    addressController.addListener(_updateText);
   }
 
   void _updateText() {
     setState(() {
-      _contact =_contactController.text;
-      _totalAmount = _totalAmountController.text;
-      _interest = _interestController.text;
-      _purpose = _purposeController.text;
-      _days = _daysController.text;
-      _loanAmount = _loanAmountController.text;
-      _primary = _primaryController.text;
-      _firstName = _firstController.text;
-      _middleName = _middleController.text;
-      _surName = _surController.text;
-      _birth = _birthController.text;
-      _gender = _genderController.text;
-      _address = _addressController.text;
-      if (_days != null && _loanAmount != null) {
-        var days = double.tryParse(_days);
-        var loanAmount = double.tryParse(_loanAmount);
-        if (days != null && loanAmount != null) {
-          var interest = days * loanAmount * 0.0006;
-          _interestController.text = interest.toStringAsFixed(2);
-          var totalAmount = interest + loanAmount;
-          _totalAmountController.text = totalAmount.toStringAsFixed(2);
+      contact = contactController.text;
+      total_amount = total_amountController.text;
+      interest = interestController.text;
+      purpose = purposeController.text;
+      days = daysController.text;
+      loan_amount = loan_amountController.text;
+      primary = primaryController.text;
+      first_name = first_nameController.text;
+      middle_name = middle_nameController.text;
+      sur_name = sur_nameController.text;
+      birth = birthController.text;
+      gender = genderController.text;
+      address = addressController.text;
+      if (days != null && loan_amount != null) {
+        double? parsedDays = double.tryParse(days!);
+        double? parsedLoanAmount = double.tryParse(loan_amount!);
+        if (parsedDays != null && parsedLoanAmount != null) {
+          double interestValue = parsedDays * parsedLoanAmount * 0.0006;
+          interestController.text = interestValue.toStringAsFixed(2);
+          double totalAmount = interestValue + parsedLoanAmount;
+          total_amountController.text = totalAmount.toStringAsFixed(2);
         }
       }
     });
   }
 
   void checkLoanAmount() {
-    if (_loanAmount.isNotEmpty) {
-      int loanAmount = int.tryParse(_loanAmount) ?? 0;
+    if (loan_amount.isNotEmpty) {
+      int loanAmount = int.tryParse(loan_amount) ?? 0;
       if (loanAmount > 25000) {
         showDialog(
           context: context,
@@ -125,7 +125,7 @@ class _UserBarrowState extends State<UserBarrow> {
             validator: (value) {
               return value!.isEmpty ? "Please enter your phone number " : null;
             },
-            controller: _contactController,
+            controller: contactController,
             style: TextStyle(fontSize: 18),
             decoration: InputDecoration(
               labelText: 'Phone number',
@@ -133,13 +133,13 @@ class _UserBarrowState extends State<UserBarrow> {
                   borderSide: BorderSide(color: Colors.green)),
             ),
           ),
-            Text("Your legal Firstname is ${_contactController.text}  "),
+            Text("Your legal Firstname is ${contactController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your Phone number" : null;
               },
-              controller: _firstController,
+              controller: first_nameController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 labelText: 'First name',
@@ -147,65 +147,65 @@ class _UserBarrowState extends State<UserBarrow> {
                     borderSide: BorderSide(color: Colors.green)),
               ),
             ),
-            Text("Your legal Firstname is ${_firstController.text}  "),
+            Text("Your legal Firstname is ${first_nameController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your middle name" : null;
               },
-              controller: _middleController,
+              controller: middle_nameController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 labelText: 'middle name',
                 border: OutlineInputBorder(),
               ),
             ),
-            Text("Your legal middlename is ${_middleController.text}  "),
+            Text("Your legal middlename is ${middle_nameController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your surname" : null;
               },
-              controller: _surController,
+              controller: sur_nameController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 labelText: 'Surname',
                 border: OutlineInputBorder(),
               ),
             ),
-            Text("Your legal Surname is ${_surController.text}  "),
+            Text("Your legal Surname is ${sur_nameController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your Birthday" : null;
               },
-              controller: _birthController,
+              controller: birthController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 hintText: 'Date/Month/Year',
                 border: OutlineInputBorder(),
               ),
             ),
-            Text("Your legal Birth date is ${_birthController.text}  "),
+            Text("Your legal Birth date is ${birthController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your gender" : null;
               },
-              controller: _genderController,
+              controller: genderController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 hintText: 'Male/female',
                 border: OutlineInputBorder(),
               ),
             ),
-            Text("Your Gender is ${_genderController.text}  "),
+            Text("Your Gender is ${genderController.text}  "),
             SizedBox(height: 20),
             TextFormField(
               validator: (value) {
                 return value!.isEmpty ? "Please enter your Address" : null;
               },
-              controller: _addressController,
+              controller: addressController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 labelText: 'Address',
@@ -236,7 +236,7 @@ class _UserBarrowState extends State<UserBarrow> {
                     ? "Please enter your Primary source"
                     : null;
               },
-              controller: _primaryController,
+              controller: primaryController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 hintText: 'Scource Income',
@@ -252,10 +252,10 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextFormField(
-              validator: (value) {
-                return value!.isEmpty ? "Please enter your loan amount" : null;
+              validator: (checkLoanAmount) {
+                return checkLoanAmount!.isEmpty ? "Please enter your loan amount" : null;
               },
-              controller: _loanAmountController,
+              controller: loan_amountController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 hintText: 'Loan Amount',
@@ -271,7 +271,7 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextField(
-              controller: _daysController,
+              controller: daysController,
               style: TextStyle(fontSize: 18),
               decoration: InputDecoration(
                 hintText: 'Reminder: Maximum of 90days',
@@ -287,7 +287,7 @@ class _UserBarrowState extends State<UserBarrow> {
               height: 10,
             ),
             TextField(
-              controller: _purposeController,
+              controller: purposeController,
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -316,19 +316,19 @@ class _UserBarrowState extends State<UserBarrow> {
           MaterialPageRoute(
             builder: (context) {
               return ConfirmUser(
-                contact: _contactController.text,
-                firstName: _firstController.text,
-                middleName: _middleController.text,
-                surName: _surController.text,
-                birth: _birthController.text,
-                gender: _genderController.text,
-                primary: _primaryController.text,
-                address: _addressController.text,
-                loanAmount: _loanAmountController.text,
-                days: _daysController.text,
-                purpose: _purposeController.text,
-                totalAmount: _totalAmountController.text,
-                interest: _interestController.text,
+                contact: contactController.text,
+                first_name: first_nameController.text,
+                middle_name: middle_nameController.text,
+                sur_name: sur_nameController.text,
+                birth: birthController.text,
+                gender: genderController.text,
+                primary: primaryController.text,
+                address: addressController.text,
+                loan_amount: loan_amountController.text,
+                days: daysController.text,
+                purpose: purposeController.text,
+                total_amount: total_amountController.text,
+                interest: interestController.text,
               );
             },
           ),
