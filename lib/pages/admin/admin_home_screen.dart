@@ -22,10 +22,31 @@ class _AdminHomeState extends State<AdminHome> {
 
   void data()async{
     http.Response response = await fetchClient.getClientList();
-    for(var i in jsonDecode(response.body)){
+    print(jsonDecode(response.body));
+    // for(var i in jsonDecode(response.body)){
+    //   fetchData.add(DataRow(cells:[
+    //     DataCell(Text(i['status'])),
+    //     DataCell(Text(i['contact'])),
+    //     DataCell(Text(i['first_name'])),
+    //     DataCell(Text(i['middle_name'])),
+    //     DataCell(Text(i['sur_name'])),
+    //     DataCell(Text(i['birth'])),
+    //     DataCell(Text(i['gender'])),
+    //     DataCell(Text(i['address'])),
+    //     DataCell(Text(i['primary'])),
+    //     DataCell(Text(i['loan_amount'])),
+    //     DataCell(Text(i['days'])),
+    //     DataCell(Text(i['interest'])),
+    //     DataCell(Text(i['total_amount'])),
+    //   ]));
+    // }
 
-    }
+  }
 
+  @override
+  void initState(){
+    super.initState();
+    data();
   }
   @override
   Widget build(BuildContext context) {
@@ -262,31 +283,10 @@ class _AdminHomeState extends State<AdminHome> {
                                 DataColumn(label: Text('LOAN DAYS')),
                                 DataColumn(label: Text('INTEREST')),
                                 DataColumn(label: Text('TOTAL REPAYMENT')),
-                                DataColumn(label: Text('Actions')),
                               ],
-                              rows: [
-                                DataRow(cells: [
-                                  DataCell(Text('1')),
-                                  DataCell(Text("PENDING")),
-                                  DataCell(Text("0932423423")),
-                                  DataCell(Text('jeriz aguilar')),
-                                  DataCell(Text("20,000")),
-                                  DataCell(Text('60 DAYS')),
-                                  DataCell(Text('720')),
-                                  DataCell(Text('20,720')),
-                                  DataCell(Row(
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.check)),
-                                      SizedBox(width: 10),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.dangerous)),
-                                    ],
-                                  )),
-                                ]),
-                              ])
+                              rows:
+                                fetchData
+                              )
                         ],
                       ),
                     ],

@@ -6,10 +6,11 @@ import 'package:moneytap/model/model.dart';
 class FetchClient2 {
   var data = [];
   List<Clientlist> results = [];
-  String fetchurl = "http://127.0.0.1:8080/loan_status";
+  String fetchurl = "http://10.21.0.16:8080/api/getall_loanstatus";
   Future<http.Response> getClientList() async {
     var url = Uri.parse(fetchurl);
     http.Response response = await http.get(url);
+    print(response.body);
     try {
       if (response.statusCode == 200) {
         data = jsonDecode(response.body);
@@ -23,6 +24,7 @@ class FetchClient2 {
       print('error: $e');
       throw e.toString();
     }
+
 
   }
 }
